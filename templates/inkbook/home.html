@@ -1,0 +1,38 @@
+{% extends 'inkbook/base.html' %}
+
+{% block content %}
+
+    {% for ser in all_series %}
+    <div class="typeholder">
+      <div class="typeheader"><h2>{{ ser.name }}</h2></div>
+      <div class="typeheader"><p>{{ ser.description }}</p></div>
+
+      <div class="swatchwall">
+
+          {% for ink in ser.color_of_series.all|dictsort:"pantone" %}
+          <div class="box">
+
+              {% if ser.name == "180 Metallics" %}
+              <div class="swatch met180" style="background-color: #{{ ink.rgb }}"></div>
+              {% elif ser.name == "Glitter" %}
+              <div class="swatch glitter" style="background-color: #{{ ink.rgb }}"></div>
+              {% else %}
+              <div class="swatch" style="background-color: #{{ ink.rgb }}"></div>
+              {% endif %}
+
+              <div class="name">
+                  <h5>{{ ink.name }}</h5>
+                  <P>Pantone: {{ ink.pantone }} </P>
+              </div>
+
+          </div>
+          {% endfor %}
+
+          <div class="clear"></div>
+          <div class="rightbutt"><a href="{{ser.specs_url}}">View Spec-sheet for {{ser.name}}</a></div>
+          <div class="clear"></div>
+      </div>
+    </div>
+    {% endfor %}
+
+{% endblock %}
